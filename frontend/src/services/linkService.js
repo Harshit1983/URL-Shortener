@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL + '/api/links';
+const API_URL = (import.meta.env.VITE_API_URL || '') + '/api/links';
 
 export const getUserLinks = async (token) => {
 

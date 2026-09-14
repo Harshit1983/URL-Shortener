@@ -26,10 +26,12 @@ async function shortenUrl(req, res) {
             });
         }
 
-        // Check if URL already exists
-        let url = await Url.findOne({
-            longUrl: longUrl
-        });
+        // Check if URL already exists for the user or guest
+        const query = (req.user && req.user.id)
+            ? { longUrl: longUrl, user: req.user.id }
+            : { longUrl: longUrl, user: null };
+
+        let url = await Url.findOne(query);
 
         if (url) {
             return res.status(200).json({
@@ -44,8 +46,11 @@ async function shortenUrl(req, res) {
 
         const urlCode = nanoid(7);
 
+        // Determine base URL from environment or request fallback
+        const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+
         // Create short URL
-        const shortUrl = `${process.env.BASE_URL}/${urlCode}`;
+        const shortUrl = `${baseUrl}/${urlCode}`;
 
         // Create URL object
         const newUrlData = {
@@ -55,7 +60,7 @@ async function shortenUrl(req, res) {
         };
 
         // Add user if logged in
-        if (req.user) {
+        if (req.user && req.user.id) {
             newUrlData.user = req.user.id;
         }
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 import './RegisterPage.css';
 
 export default function RegisterPage() {
@@ -14,6 +15,9 @@ export default function RegisterPage() {
   const [success, setSuccess] = useState('');
   const [formErrors, setFormErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const validate = () => {
     const errors = {};
@@ -86,15 +90,18 @@ export default function RegisterPage() {
 
       console.log('Registration successful:', res);
 
-      setSuccess('Registration successful! Please log in.');
-
-      setFormData({
-        name: '',
-        email: '',
-        password: '',
-      });
-
-      setFormErrors({});
+      if (res && res.token) {
+        login(res.token);
+        navigate('/dashboard');
+      } else {
+        setSuccess('Registration successful! Please log in.');
+        setFormData({
+          name: '',
+          email: '',
+          password: '',
+        });
+        setFormErrors({});
+      }
     } catch (err) {
       console.error('Registration error:', err);
 

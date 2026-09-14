@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export const createShortUrl = async (longUrl) => {
 
@@ -11,13 +11,20 @@ export const createShortUrl = async (longUrl) => {
         const config = {};
 
         if (token) {
+
             config.headers = {
                 Authorization: `Bearer ${token}`
             };
+
         }
 
+        console.log(
+            'Shorten URL token:',
+            token ? 'TOKEN_PRESENT' : 'NO_TOKEN'
+        );
+
         const res = await axios.post(
-            API_URL + '/api/shorten',
+            `${API_URL}/api/shorten`,
             {
                 longUrl: longUrl
             },
@@ -28,9 +35,15 @@ export const createShortUrl = async (longUrl) => {
 
     } catch (error) {
 
-        console.error('API Error:', error);
+        console.error(
+            'API Error:',
+            error
+        );
 
-        if (error.response && error.response.data) {
+        if (
+            error.response &&
+            error.response.data
+        ) {
             throw error.response.data;
         }
 

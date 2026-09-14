@@ -13,45 +13,43 @@ import { AuthProvider } from './context/AuthContext';
 
 function App() {
     return (
-        <AuthProvider>
-            <BrowserRouter>
+        <BrowserRouter>
 
-                <Navbar />
+            <Navbar />
 
-                <div className="container">
+            <div className="container">
 
-                    <Routes>
+                <Routes>
 
-                        <Route
-                            path="/"
-                            element={<HomePage />}
-                        />
+                    <Route
+                        path="/"
+                        element={<HomePage />}
+                    />
 
-                        <Route
-                            path="/login"
-                            element={<LoginPage />}
-                        />
+                    <Route
+                        path="/login"
+                        element={<LoginPage />}
+                    />
 
-                        <Route
-                            path="/register"
-                            element={<RegisterPage />}
-                        />
+                    <Route
+                        path="/register"
+                        element={<RegisterPage />}
+                    />
 
-                        <Route
-                            path="/dashboard"
-                            element={
-                                <PrivateRoute>
-                                    <DashboardPage />
-                                </PrivateRoute>
-                            }
-                        />
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <PrivateRoute>
+                                <DashboardPage />
+                            </PrivateRoute>
+                        }
+                    />
 
-                    </Routes>
+                </Routes>
 
-                </div>
+            </div>
 
-            </BrowserRouter>
-        </AuthProvider>
+        </BrowserRouter>
     );
 }
 

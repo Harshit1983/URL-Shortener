@@ -41,7 +41,7 @@ async function registerUser(req, res) {
             payload,
             process.env.JWT_SECRET,
             {
-                expiresIn: '1h'
+                expiresIn: '7d'
             }
         );
 
@@ -109,7 +109,7 @@ async function loginUser(req, res, next) {
             payload,
             process.env.JWT_SECRET,
             {
-                expiresIn: '1h'
+                expiresIn: '7d'
             }
         );
 
