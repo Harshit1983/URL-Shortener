@@ -32,8 +32,9 @@ export default function HomePage() {
     return errors;
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
+
     setIsCopied(false);
     setServerError('');
     setShortUrlData(null);
@@ -42,26 +43,33 @@ export default function HomePage() {
     setFormErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
-      return;
+        return;
     }
 
     setIsLoading(true);
 
     try {
-      const res = await createShortUrl(longUrl, token);
-      console.log('Server response:', res);
-      setShortUrlData(res.data);
-    } catch (err) {
-      console.error('Create short URL error:', err);
-      const errorMessage = err.message || 'An unexpected error occurred.';
-      setServerError(errorMessage);
-      setShortUrlData(null);
-      alert(`Error: ${errorMessage}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        const data = await createShortUrl(longUrl);
 
+        console.log('Server response:', data);
+
+        setShortUrlData(data);
+
+    } catch (err) {
+        console.error('Create short URL error:', err);
+
+        const errorMessage =
+            err.message || 'An unexpected error occurred.';
+
+        setServerError(errorMessage);
+        setShortUrlData(null);
+
+        alert(`Error: ${errorMessage}`);
+
+    } finally {
+        setIsLoading(false);
+    }
+};
   const handleCopy = async () => {
     if (!shortUrlData || !shortUrlData.shortUrl) {
       return;

@@ -30,7 +30,7 @@ const DashboardPage = () => {
 
     const res = await getUserLinks(token);
 
-                setLinks(res.data);
+                setLinks(res.links || []);
             } catch (err) {
                 console.error('Failed to fetch links:', err);
 
