@@ -4,11 +4,6 @@ async function authUser(req, res, next) {
 
     const authHeader = req.headers.authorization;
 
-    console.log(
-        'Authorization header:',
-        authHeader ? 'PRESENT' : 'MISSING'
-    );
-
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({
             success: false,
@@ -25,18 +20,11 @@ async function authUser(req, res, next) {
             process.env.JWT_SECRET
         );
 
-        console.log('JWT verified successfully');
-
         req.user = decoded.user;
 
         next();
 
     } catch (error) {
-
-        console.log(
-            'JWT verification failed:',
-            error.message
-        );
 
         return res.status(401).json({
             success: false,
@@ -45,6 +33,38 @@ async function authUser(req, res, next) {
     }
 }
 
+
+function optionalAuth(req, res, next) {
+
+    const authHeader = req.headers.authorization;
+
+    // User is not logged in
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return next();
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    try {
+
+        const decoded = jwt.verify(
+            token,
+            process.env.JWT_SECRET
+        );
+
+        req.user = decoded.user;
+
+    } catch (error) {
+
+        // Invalid/expired token is treated as guest
+        req.user = null;
+    }
+
+    next();
+}
+
+
 module.exports = {
-    authUser
+    authUser,
+    optionalAuth
 };

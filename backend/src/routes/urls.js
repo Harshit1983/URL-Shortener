@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { shortenUrl, redirectToUrl } = require('../controllers/urlControllers');
-
+const { optionalAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ const router = express.Router();
 router.post('/shorten', shortenUrl);
 
 // Redirect short URL
-router.get('/:code', redirectToUrl);
+router.get('/:code',optionalAuth, redirectToUrl);
 
 module.exports = router;
