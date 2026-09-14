@@ -25,7 +25,10 @@ const DashboardPage = () => {
             }
 
             try {
-                const res = await getUserLinks(token);
+    console.log('Dashboard token exists:', !!token);
+    console.log('Dashboard token:', token ? 'TOKEN_PRESENT' : 'NO_TOKEN');
+
+    const res = await getUserLinks(token);
 
                 setLinks(res.data);
             } catch (err) {

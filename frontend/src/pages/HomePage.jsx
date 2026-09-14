@@ -48,7 +48,7 @@ export default function HomePage() {
     setIsLoading(true);
 
     try {
-      const res = await createShortUrl(longUrl);
+      const res = await createShortUrl(longUrl, token);
       console.log('Server response:', res);
       setShortUrlData(res.data);
     } catch (err) {

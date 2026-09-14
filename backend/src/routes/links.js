@@ -1,8 +1,9 @@
 const express = require('express');
-const {authUser} = require('../middleware/auth')
-const {getMylinks} = require('../controllers/linksController')
+const { getMyLinks } = require('../controllers/linksController');
+const { authUser } = require('../middleware/auth');
+
 const router = express.Router();
 
-router.get('/my-links',authUser,getMylinks)
+router.get('/my-links', authUser, getMyLinks);
 
 module.exports = router;

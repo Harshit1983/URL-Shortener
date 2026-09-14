@@ -2,9 +2,6 @@ const jwt = require('jsonwebtoken');
 
 function authUser(req, res, next) {
     const token = req.cookies ? req.cookies.token : null;
-
-    // User is not logged in.
-    // Continue because some routes can be accessed without authentication.
     if (!token) {
         return next();
     }

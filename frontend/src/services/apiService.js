@@ -1,12 +1,22 @@
 import axios from 'axios';
 
-export const createShortUrl = async (longUrl) => {
+const API_URL = import.meta.env.VITE_API_URL;
 
+export const createShortUrl = async (longUrl, token) => {
     try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
 
-        const res = await axios.post('/api/shorten', {
-            longUrl: longUrl
-        });
+        const res = await axios.post(
+            API_URL + '/api/shorten',
+            {
+                longUrl: longUrl
+            },
+            config
+        );
 
         return res.data;
 
@@ -15,9 +25,7 @@ export const createShortUrl = async (longUrl) => {
         console.error('API Error:', error);
 
         if (error.response && error.response.data) {
-
             throw error.response.data;
-
         }
 
         throw new Error(
