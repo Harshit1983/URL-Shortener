@@ -53,7 +53,7 @@ const handleSubmit = async (e) => {
 
         console.log('Server response:', data);
 
-        setShortUrlData(data);
+        setShortUrlData(data.data);
 
     } catch (err) {
         console.error('Create short URL error:', err);
