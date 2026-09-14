@@ -25,10 +25,10 @@ const DashboardPage = () => {
             }
 
             try {
-    console.log('Dashboard token exists:', !!token);
-    console.log('Dashboard token:', token ? 'TOKEN_PRESENT' : 'NO_TOKEN');
+                console.log('Dashboard token exists:', !!token);
+                console.log('Dashboard token:', token ? 'TOKEN_PRESENT' : 'NO_TOKEN');
 
-    const res = await getUserLinks(token);
+                const res = await getUserLinks(token);
 
                 setLinks(res.links || []);
             } catch (err) {
@@ -182,11 +182,10 @@ const DashboardPage = () => {
 
                                             <button
                                                 type="button"
-                                                className={`btn btn-copy btn-small ${
-                                                    copiedLinkId === link._id
+                                                className={`btn btn-copy btn-small ${copiedLinkId === link._id
                                                         ? 'copied'
                                                         : ''
-                                                }`}
+                                                    }`}
                                                 onClick={() =>
                                                     handleCopy(
                                                         link.shortUrl,
