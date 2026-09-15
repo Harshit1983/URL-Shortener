@@ -57,7 +57,7 @@ export default function LoginPage() {
                 console.log('Login successful!');
                 console.log('Token stored and authentication state updated.');
 
-                navigate('/dashboard');
+                navigate('/');
 
             } else {
 
